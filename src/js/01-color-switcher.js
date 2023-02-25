@@ -13,7 +13,7 @@ startButton.addEventListener(`click`, () => {
   }, 1000);
   startButton.setAttribute('disabled', true);
 });
-
+ 
 stopButton.addEventListener(`click`, () => {
   clearInterval(timerId);
   startButton.removeAttribute('disabled');
