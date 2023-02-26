@@ -12,6 +12,7 @@ minutes: document.querySelector(`span[data-minutes]`),
 seconds: document.querySelector(`span[data-seconds]`),
 };
 
+refs.btnStart.disabled = true;
 let selectedDate = null;
 
 const options = {
@@ -22,7 +23,9 @@ const options = {
     onClose(selectedDates) {
       selectedDates[0] - options.defaultDate < 0
       ? Notify.failure(`Please choose a date in the future.`) : 
+      (refs.btnStart.disabled = false);
      selectedDate = selectedDates[0];
+     
       refs.btnStart.addEventListener(`click`, onStartTimer);        
     },
   };
@@ -43,7 +46,6 @@ const options = {
       if (days <= 0 && hours <= 0 && minutes <= 0 && seconds <= 0) {
         clearInterval(timerIntervalId);
         Notify.success('Timer finished!');
-        refs.btnStart.disabled = false;
       }
     }, 1000);
   }
