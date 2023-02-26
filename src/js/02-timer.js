@@ -12,7 +12,6 @@ minutes: document.querySelector(`span[data-minutes]`),
 seconds: document.querySelector(`span[data-seconds]`),
 };
 
-refs.btnStart.disabled = true;
 let selectedDate = null;
 
 const options = {
@@ -23,8 +22,7 @@ const options = {
     onClose(selectedDates) {
       selectedDates[0] - options.defaultDate < 0
       ? Notify.failure(`Please choose a date in the future.`) : 
-      (refs.btnStart.disabled = false);
-      selectedDate = selectedDates[0];
+     selectedDate = selectedDates[0];
       refs.btnStart.addEventListener(`click`, onStartTimer);        
     },
   };
@@ -32,7 +30,8 @@ const options = {
   flatpickr(`#datetime-picker`, options)
 
   function onStartTimer() {
-    setInterval(() => {
+    refs.btnStart.disabled = true;
+    const timerIntervalId = setInterval(() => {
       const { days, hours, minutes, seconds } = convertMs(
         selectedDate - Date.now()
       );
@@ -40,6 +39,12 @@ const options = {
       refs.hours.textContent = hours;
       refs.minutes.textContent = minutes;
       refs.seconds.textContent = seconds;
+  
+      if (days <= 0 && hours <= 0 && minutes <= 0 && seconds <= 0) {
+        clearInterval(timerIntervalId);
+        Notify.success('Timer finished!');
+        refs.btnStart.disabled = false;
+      }
     }, 1000);
   }
   

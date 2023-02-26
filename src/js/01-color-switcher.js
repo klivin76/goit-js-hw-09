@@ -22,4 +22,3 @@ stopButton.addEventListener(`click`, () => {
   startButton.removeAttribute('disabled');
   stopButton.setAttribute('disabled', true);
 });
-
